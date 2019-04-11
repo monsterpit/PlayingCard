@@ -41,14 +41,18 @@ struct PlayingCard{
             switch self {
             case .ace: return 1
             case .numeric(let pips): return pips
-                
-            case .face(let kind):
-                if kind == "J" {return 11}
-                else if kind == "Q" {return 12}
-                else {return 13}
+                //  case .face(let kind):
+                //                if kind == "J" {return 11}
+                //                else if kind == "Q" {return 12}
+                //                else {return 13}
                 // instead we can do is  where
                 //this stuff with case switches was a pattern matching language check docs for it
             // but one of things it can do is where
+            case .face(let kind) where kind=="J": return 11
+            case .face(let kind) where kind=="Q": return 12
+            case .face(let kind) where kind=="K": return 13
+
+                
             default:
                 return nil
             }
