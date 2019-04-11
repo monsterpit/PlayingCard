@@ -13,6 +13,7 @@ struct PlayingCardDeck{
     private(set) var  cards = [PlayCard]()
     
     init(){
+        //Swift allows nest type with e.g. PlayCard.Suit enum "Suit" in Struct
         for suit in PlayCard.Suit.all{
             for rank in PlayCard.Rank.all{
                 cards.append(PlayCard(suit: suit, rank: rank))
