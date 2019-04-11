@@ -30,6 +30,10 @@ struct PlayingCard{
         case diamonds  = "♦"
         case hearts    = "♥"
         case clubs     = "♣"
+        
+        //returns all Suits
+        static var all : [Suit] = [Suit.spades,.diamonds,.hearts,.clubs]
+
     }
     enum Rank{
         case ace
@@ -48,14 +52,26 @@ struct PlayingCard{
                 // instead we can do is  where
                 //this stuff with case switches was a pattern matching language check docs for it
             // but one of things it can do is where
+                //where makes it we dont count every possible value so we have default
             case .face(let kind) where kind=="J": return 11
             case .face(let kind) where kind=="Q": return 12
             case .face(let kind) where kind=="K": return 13
 
-                
             default:
                 return nil
             }
+        }
+        
+        //static becuase talking about all not one
+        static var all : [Rank]{
+            var allRanks = [Rank.ace]
+            for pip in 2...10{
+                allRanks.append(Rank.numeric(pip))
+            }
+            
+             // once given Rank.face it can swift can infer rest
+            allRanks += [Rank.face("J"),.face("Q"),.face("K")]
+            return allRanks
         }
     }
     
