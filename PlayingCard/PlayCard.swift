@@ -8,7 +8,14 @@
 
 import Foundation
 
-struct PlayCard{
+//CustomStringConvertible protocol is used to print output nicely
+//e.g. PlayCard(suit: PlayingCard.PlayCard.Suit.hearts, rank: PlayingCard.PlayCard.Rank.face("Q")) To card is of hearts and 12
+
+struct PlayCard : CustomStringConvertible{
+    var description: String {
+        return "card is of \(suit) and \(rank)"
+    }
+    
     
     var suit : Suit
     var rank : Rank
@@ -35,7 +42,13 @@ struct PlayCard{
         static var all : [Suit] = [Suit.spades,.diamonds,.hearts,.clubs]
 
     }
-    enum Rank{
+    //enum Rank { before
+    //card is of spades and numeric(2)
+    //enum Rank : CustomStringConvertible
+    //card is of spades and 2
+    enum Rank : CustomStringConvertible{
+        var description: String {return String(order!)}
+        
         case ace
         // enums associated data
         case face(String)
