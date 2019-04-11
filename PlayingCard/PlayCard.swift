@@ -1,6 +1,6 @@
 //
-//  PlayingCard.swift
-//  PlayingCard
+//  PlayCard.swift
+//  PlayCard
 //
 //  Created by MB on 4/11/19.
 //  Copyright © 2019 MB. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PlayingCard{
+struct PlayCard{
     
     var suit : Suit
     var rank : Rank
