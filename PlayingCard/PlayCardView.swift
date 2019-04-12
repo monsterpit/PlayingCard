@@ -46,7 +46,7 @@ class PlayCardView: UIView {
     }
     
     private var cornerString : NSAttributedString{
-        return centeredAttributedString(rank + "\n" + suit, fontSize: 0)
+        return centeredAttributedString(rank + "\n" + suit, fontSize: cornerFontSize)
     }
     
     
@@ -66,4 +66,36 @@ class PlayCardView: UIView {
     
     
     
+}
+
+
+extension PlayCardView{
+    // we make a private struct we put it a name sometime we call it constants we called it SizeRatio because all of our constant are about ratio
+    //Constants are declared in private struct with static variables
+    private struct SizeRatio{
+        static let cornerFontSizeToBoundsHeight  : CGFloat = 0.085
+        static let cornerRadiusToBoundsHeight    : CGFloat = 0.6
+        static let cornerOffsetToCornerRadius    : CGFloat = 0.33
+        static let faceCardImageSizeToBoundsSize : CGFloat = 0.75
+    }
+    
+    //computed property
+    
+    // bounds.size.height gives the bounds height
+    private var cornerRadius : CGFloat {return bounds.size.height * SizeRatio.cornerRadiusToBoundsHeight}
+    
+    private var cornerOffset : CGFloat {return cornerRadius * SizeRatio.cornerOffsetToCornerRadius}
+    
+    private var cornerFontSize : CGFloat {return bounds.size.height * SizeRatio.cornerFontSizeToBoundsHeight}
+    
+    private var rankString : String{
+        switch rank{
+        case 1      : return "A"
+        case 2...10 : return String(rank)
+        case 11     : return "J"
+        case 12     : return "Q"
+        case 13     : return "K"
+        default     : return "?"
+        }
+    }
 }
