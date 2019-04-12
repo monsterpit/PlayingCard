@@ -9,8 +9,23 @@
 import UIKit
 
 class PlayCardView: UIView {
-
-
+    
+    
+    //but rank and suit where enum in model , but who care's this is a view it knows nothing about that model , this is a generic card drawing view.It knows nothing about that particular model
+    //So fact it represents rank and suit in completely different way perfectly fine
+    // whose job is it to translate model and view ofcourse controller
+    
+    //when you have var's in view that effect the view will draw you have to think about the fact if this changes the rank your view needs to redraw itself so  we will use didSet
+    
+    // setNeedsDisplay will cause drawRect called eventually
+    // so cant call drawRect directly we have to tell system we need to be displayed
+    
+    //Our view has anaother little thing that needs to happen. We have subviews to draw our part of view, so we need to have those subviews laid out.
+    //Now we are not using Auto Layout in our subviews we are putting them where they belong in the corners,but we still need to say "setNeedsLayout()"
+    // So our subviews can get laid out.Now you don't have to say this if you dont have any subviews that needs laying out or that aren't affected by the rank changing.In our case it definitely change the rank. So we are going to do that for all public vars here because if public change any of these things it's going to change the way our card looks
+    var rank : Int = 5 {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var suit : String = "♥️" {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var isFaceUp : Bool = true {didSet{setNeedsDisplay(); setNeedsLayout()}}
     
     private func centeredAttributedString(_ string : String,fontSize : CGFloat ) -> NSAttributedString{
         
@@ -29,8 +44,11 @@ class PlayCardView: UIView {
         //returning NSAttributedString with attributes
         return NSAttributedString(string: string, attributes: [.font : font , .paragraphStyle : paragraphStyle])
     }
-
-
+    
+    private var cornerString : NSAttributedString{
+        return centeredAttributedString(rank + "\n" + suit, fontSize: 0)
+    }
+    
     
     override func draw(_ rect: CGRect) {
         // bounds is bounds of custom View i.e. self i.e. PlayCardView
@@ -44,24 +62,8 @@ class PlayCardView: UIView {
     
     
     
-    // apply attributed string to particular range of string i.e. 2nd to 4th character
-    //    let swiftyText = "hello"
-    //
-    //    var objcText = NSMutableAttributedString(string: swiftyText)
-    //
-    //    let elRange = swiftyText.firstIndex(of: "e")!...swiftyText.firstIndex(of: "l")!
-    //
-    //    let nsrange = NSRange(elRange, in: swiftyText)
-    //
-    //
-    //    let font = UIFont(name: "Helvetica", size: 12.0)
-    //    let metrics = UIFontMetrics.default// or UIFontMetrics.default
-    //    let fontToUse = metrics.scaledFont(for: font!)
-    //
-    //
-    //    objcText.addAttribute(.font, value: fontToUse, range: nsrange)
-    //    // objcText.addAttribute(.foregroundColor, value: UIColor.red, range: nsrange)
-    //
+
+    
     
     
 }
