@@ -131,7 +131,7 @@ extension PlayCardView{
     //Constants are declared in private struct with static variables
     private struct SizeRatio{
         static let cornerFontSizeToBoundsHeight  : CGFloat = 0.085
-        static let cornerRadiusToBoundsHeight    : CGFloat = 0.6
+        static let cornerRadiusToBoundsHeight    : CGFloat = 0.06
         static let cornerOffsetToCornerRadius    : CGFloat = 0.33
         static let faceCardImageSizeToBoundsSize : CGFloat = 0.75
     }
