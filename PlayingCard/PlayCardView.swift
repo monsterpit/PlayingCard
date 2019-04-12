@@ -118,10 +118,12 @@ class PlayCardView: UIView {
         
         //btw transform only has 3 methods rotate,translate and scale
         //CGAffineTransform.identity gives a identity matrix and we rotate it by pi radians
-        lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
-
+     
+        //   lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
+        //MARK:- 43.20 Multitouch https://www.youtube.com/watch?v=_ao1tlshRi0&list=PL3d_SFOiG7_8ofjyKzX6Nl1wZehbdiZC_&index=7
+        //has this wont work as it will rotate around origin so we have to translate it
         
-        
+        lowerRightCornerLabel.transform = CGAffineTransform.identity.translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height).rotated(by: CGFloat.pi)
         
         //offsetting first to get origin inside rounded corner then offsetting to get inside by size of frame of label
         lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
