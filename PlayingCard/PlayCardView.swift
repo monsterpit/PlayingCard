@@ -46,13 +46,14 @@ class PlayCardView: UIView {
     }
     
     private var cornerString : NSAttributedString{
-        return centeredAttributedString(rank + "\n" + suit, fontSize: cornerFontSize)
+        return centeredAttributedString(rankString + "\n" + suit, fontSize: cornerFontSize)
     }
+    
     
     
     override func draw(_ rect: CGRect) {
         // bounds is bounds of custom View i.e. self i.e. PlayCardView
-        let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: 16)
+        let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         
         roundedRect.addClip()
         UIColor.white.setFill()
@@ -97,5 +98,30 @@ extension PlayCardView{
         case 13     : return "K"
         default     : return "?"
         }
+    }
+}
+
+extension CGRect{
+    var leftHalf : CGRect{
+        return CGRect(x: minX, y: minY, width: width/2, height: height)
+    }
+    var rightHalf : CGRect{
+        return CGRect(x: midX, y: minY, width: width/2, height: height)
+    }
+    
+    func inset(by size : CGSize) -> CGRect{
+        return insetBy(dx: size.width, dy: size.height)
+    }
+    
+    func zoom(by scale: CGFloat) -> CGRect{
+        let newWidth = width * scale
+        let newHeight = height * scale
+        return insetBy(dx: (width - newWidth)/2, dy: (height - newHeight)/2)
+    }
+}
+
+extension CGPoint{
+    func offsetBy(dx : CGFloat,dy : CGFloat) -> CGPoint{
+        return CGPoint(x: x+dx, y: y+dy)
     }
 }
