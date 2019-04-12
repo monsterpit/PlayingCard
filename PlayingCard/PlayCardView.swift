@@ -68,7 +68,19 @@ class PlayCardView: UIView {
         return label
     }
     
-
+    
+    //called when our subview bounds change
+    override func layoutSubviews() {
+        
+        //use super because UIView is awesome at laying out subviews.It uses autolayout.That all autolayout stuff UIView knows how to layout your subviews
+        super.layoutSubviews()
+        
+        //Now this 2 subviews I am not doing any control dragging. I am creating them in code. So I have to do my layout myself and layoutSubviews is where you do it.
+        //Anytime your subviews needs to be laid out for any reasons this is going to get called by the system.You dont call it
+        //If you want it called you call setNeedsLayout()
+        //setNeedsLayout() -> the system will eventually call this layoutSubviews() just like
+        //setNeedsDisplay() -> the system will eventually call   func draw(_ rect: CGRect)
+    }
     
     
     override func draw(_ rect: CGRect) {
