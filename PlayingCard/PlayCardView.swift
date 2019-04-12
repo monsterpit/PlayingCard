@@ -104,6 +104,15 @@ class PlayCardView: UIView {
         //frame is used for position
         //offsetBy(dx: cornerOffset, dy: cornerOffset) is our extension to move origin point by offset to avoid rounded corner
         upperLeftCornerLabel.frame.origin = bounds.origin.offsetBy(dx: cornerOffset, dy: cornerOffset)
+        
+        
+        
+        configureCornerLabel(lowerRightCornerLabel)
+        
+        //offsetting first to get origin inside rounded corner then offsetting to get inside by size of frame of label
+        lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
+        
+        
     }
     
     
