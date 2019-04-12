@@ -218,3 +218,8 @@ extension CGPoint{
         return CGPoint(x: x+dx, y: y+dy)
     }
 }
+
+
+//safe area is the place it can draw without overriding or impinging upon other views space
+//bar button at bottom or title at top
+// we always create constraint from view's safe area
