@@ -131,6 +131,18 @@ class PlayCardView: UIView {
         
     }
     
+    //MARK:- TraitCollectionDidChange
+    // when we go on  General->accessibility->Large Text and change font of larger font size and come back to app it does have large font? That's weird .
+    //Well actually it does it's just it never redrew , if we change bounds and flip back  now we get to see large font So that's a problem.
+    //MARK:- "TraitCollectionDidChange" to track slider change
+    //When that slider moves we need to find out that it moved . And you can do that in view with a function called "TraitCollectionDidChange"
+    //traits have a lot to do with are you rotate,are you landscape are you portrait things like that are traits but also your size category is general for your font.
+    //So trait collection get called whenever those things change
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setNeedsDisplay()
+        setNeedsLayout()
+    }
     
     override func draw(_ rect: CGRect) {
         // bounds is bounds of custom View i.e. self i.e. PlayCardView
