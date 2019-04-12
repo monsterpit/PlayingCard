@@ -69,6 +69,24 @@ class PlayCardView: UIView {
     }
     
     
+    private func configureCornerLabel(_ label : UILabel){
+        label.attributedText = cornerString
+        
+        label.frame.size = CGSize.zero
+        
+        //MARK:- SizeToFit Important thing to Know
+ //(****)       // it will size the label to fit its content by  label.sizeToFit()
+        //the only tricky thing about this is though is it if that label already has some width and you say sizeToFit, it will make it taller and keep the width.
+        // we dont want that , we wanted to do the whole thing
+        // so we do label.frame.size = CGSize.zero which clear out it's size before we do sizeToFit()
+        //this way it will expand in both directions , across and down
+        label.sizeToFit()
+        
+        //hide card if not faceUp
+        //hidden keeps it in subviews list and everything,keeps it in right position just hides it
+        label.isHidden = !isFaceUp
+    }
+    
     //called when our subview bounds change
     override func layoutSubviews() {
         
@@ -80,6 +98,12 @@ class PlayCardView: UIView {
         //If you want it called you call setNeedsLayout()
         //setNeedsLayout() -> the system will eventually call this layoutSubviews() just like
         //setNeedsDisplay() -> the system will eventually call   func draw(_ rect: CGRect)
+        
+        configureCornerLabel(upperLeftCornerLabel)
+        
+        //frame is used for position
+        //offsetBy(dx: cornerOffset, dy: cornerOffset) is our extension to move origin point by offset to avoid rounded corner
+        upperLeftCornerLabel.frame.origin = bounds.origin.offsetBy(dx: cornerOffset, dy: cornerOffset)
     }
     
     
