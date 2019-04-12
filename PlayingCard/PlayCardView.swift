@@ -10,8 +10,28 @@ import UIKit
 
 class PlayCardView: UIView {
 
-    
 
+    
+    private func centeredAttributedString(_ string : String,fontSize : CGFloat ) -> NSAttributedString{
+        
+        //using preferredFont as its an user information not like system font or anything and body font and scaling to using .withSize(fontSize)
+        var font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
+        
+        // for dynamically adjusting font size based on accessibility
+        font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+        
+        // NSMutableParagraphStyle for aligning to center
+        // NSMutableParagraphStyle enscapsulate everything about paragraph like its alignment and things like that
+        let paragraphStyle = NSMutableParagraphStyle()
+        // makes whole paragraph to be centered  paragraphStyle.alignment = .center
+        paragraphStyle.alignment = .center
+        
+        //returning NSAttributedString with attributes
+        return NSAttributedString(string: string, attributes: [.font : font , .paragraphStyle : paragraphStyle])
+    }
+
+
+    
     override func draw(_ rect: CGRect) {
         // bounds is bounds of custom View i.e. self i.e. PlayCardView
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: 16)
@@ -20,9 +40,8 @@ class PlayCardView: UIView {
         UIColor.white.setFill()
         roundedRect.fill()
         
-        //But we wont get to see white rounded corner as background color of view is white and we have to make it clear to make it see through and turn opaque off as it is by default is turned on for performance as it is assumed that you dont have any see through parts, no transparency  and it can be more efficient when it draws.So if we do use transparency which is less efficient but we need it here as we want our corners to show through. we have to turn opaque off if you are going to do anything transparent in your view
-        //Done in storyboard
     }
     
+  
     
 }

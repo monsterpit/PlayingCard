@@ -35,10 +35,10 @@ struct PlayCard : CustomStringConvertible{
     enum Suit : String,CustomStringConvertible {
         
         
-        case spades    = "♠"
-        case diamonds  = "♦"
-        case hearts    = "♥"
-        case clubs     = "♣"
+        case spades    = "♠️"
+        case diamonds  = "♦️"
+        case hearts    = "♥️"
+        case clubs     = "♣️"
         
         //returns all Suits
         static var all : [Suit] = [Suit.spades,.diamonds,.hearts,.clubs]
