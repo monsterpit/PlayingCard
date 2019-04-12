@@ -42,6 +42,26 @@ class PlayCardView: UIView {
         
     }
     
-  
+    
+    
+    // apply attributed string to particular range of string i.e. 2nd to 4th character
+    //    let swiftyText = "hello"
+    //
+    //    var objcText = NSMutableAttributedString(string: swiftyText)
+    //
+    //    let elRange = swiftyText.firstIndex(of: "e")!...swiftyText.firstIndex(of: "l")!
+    //
+    //    let nsrange = NSRange(elRange, in: swiftyText)
+    //
+    //
+    //    let font = UIFont(name: "Helvetica", size: 12.0)
+    //    let metrics = UIFontMetrics.default// or UIFontMetrics.default
+    //    let fontToUse = metrics.scaledFont(for: font!)
+    //
+    //
+    //    objcText.addAttribute(.font, value: fontToUse, range: nsrange)
+    //    // objcText.addAttribute(.foregroundColor, value: UIColor.red, range: nsrange)
+    //
+    
     
 }
