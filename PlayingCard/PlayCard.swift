@@ -32,7 +32,9 @@ struct PlayCard : CustomStringConvertible{
     // why would you want raw value mostly for backwards compatibility with Objective C enums
     // because in Obj C enums were essentially ints , 0,1,2,3.... so the raw value is raw value int
     // but could imagine it might be interesting if there is some piece of data that it makes sense to associate with all the cases. And again it has be fixed and constant and unique. For all the cases
-    enum Suit : String {
+    enum Suit : String,CustomStringConvertible {
+        
+        
         case spades    = "♠"
         case diamonds  = "♦"
         case hearts    = "♥"
@@ -40,6 +42,8 @@ struct PlayCard : CustomStringConvertible{
         
         //returns all Suits
         static var all : [Suit] = [Suit.spades,.diamonds,.hearts,.clubs]
+        
+        var description: String {return rawValue}
 
     }
     //enum Rank { before
@@ -47,7 +51,7 @@ struct PlayCard : CustomStringConvertible{
     //enum Rank : CustomStringConvertible
     //card is of spades and 2
     enum Rank : CustomStringConvertible{
-        var description: String {return String(order!)}
+
         
         case ace
         // enums associated data
@@ -85,6 +89,18 @@ struct PlayCard : CustomStringConvertible{
              // once given Rank.face it can swift can infer rest
             allRanks += [Rank.face("J"),.face("Q"),.face("K")]
             return allRanks
+        }
+        
+        
+        
+        var description: String {
+            switch self {
+            case .ace:
+                return "A"
+            case .numeric(let pips) : return String(pips)
+            case . face(let kind) : return kind
+                
+            }
         }
     }
     
