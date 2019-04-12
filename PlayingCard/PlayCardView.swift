@@ -9,58 +9,31 @@
 import UIKit
 
 class PlayCardView: UIView {
-    
-//drawing some cards with subviews and drawing some with drawRect
+
+    //drawing some cards with subviews and drawing some with drawRect
     
     //and whenever system needs to draw our custom view it will use draw(_ rect: CGRect)
+    
+    //when we change orientation of phone
+    // Unfortunately not a circle , we want it be circle , its an oval.So why did we get this? Because by default, when you change the bounds of your view it just takes the bits and scales them to the new size which sometimes that might be what you want , but a lot of times this is definitely not what you want . So how do we stop this? Well,what we want it do is to call draw rect code again when we change our bounds have this draw circle again in new space
+    // changing content mode from default "scale to fill" to "redraw"
     override func draw(_ rect: CGRect) {
         // Drawing code
         
-        //drawing circle using coregraphics , in core graphics we always get the context first
-        //we cant draw in core graphics without a context and we get that using UIGraphicsGetCurrentContext()
-        //UIGraphicsGetCurrentContext could return nil but it will never return nil insidde your drawRect it might return nil in other contexts but in draw(_ rect: CGRect) it will always return
+        let path = UIBezierPath()
+        path.addArc(withCenter: CGPoint(x: bounds.midX, y: bounds.midY), radius: 100, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true)
         
-//        if let context = UIGraphicsGetCurrentContext(){
-//
-//            // bounds gives rectangles that specifies the drawing area
-//            //start angle and end angle are in radians not 0 to 360, its radians 0 to 2 pi
-//            // 0 is off to the right 0 is not straight up
-//            //2 * CGFloat.pi  back to same place i.e. like 360 degrees
-//            context.addArc(center: CGPoint(x: bounds.midX, y: bounds.midY), radius: 100, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true)
-//
-//            // line width
-//            context.setLineWidth(5)
-//
-//            UIColor.green.setFill()
-//
-//            #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1).setStroke()
-//
-//            //It wont stroke and fill the reason for that is when we draw in an context , it's actually slightly different than using that UIBezierPath
-//            //In context when we do strokePath like this it consumes the path. It uses up the path
-//            //so when we do the fillPath on the next line , there's no path. We have to start again
-//            // so thats the one of the biggest advantage of UIBezierPath
-//            context.strokePath()
-//
-//            context.fillPath()
-//        }
+        path.lineWidth = 5.0
         
+        UIColor.green.setFill()
         
-                let path = UIBezierPath()
-                path.addArc(withCenter: CGPoint(x: bounds.midX, y: bounds.midY), radius: 100, startAngle: 0, endAngle: 2*CGFloat.pi, clockwise: true)
+        #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1).setStroke()
         
-                path.lineWidth = 5.0
+        path.stroke()
         
-                UIColor.green.setFill()
-        
-                #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1).setStroke()
-        
-                path.stroke()
-        
-                path.fill()
-        
-                //and that UIBezierPath still exist as an object so i can say path.fill, can also move the path or shrink it down and stroke it again . So you can use that path that we built this arc over and over and over.That's the whole point of kind of building it in the  UIBezierPath
+        path.fill()
         
     }
-
-
+    
+    
 }
