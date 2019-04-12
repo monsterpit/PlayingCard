@@ -13,7 +13,7 @@ import Foundation
 
 struct PlayCard : CustomStringConvertible{
     var description: String {
-        return "card is of \(suit) and \(rank)"
+        return "\(suit) \(rank)"
     }
     
     
