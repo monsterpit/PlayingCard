@@ -109,6 +109,20 @@ class PlayCardView: UIView {
         
         configureCornerLabel(lowerRightCornerLabel)
         
+        //MARK:- Transform i.e. Affine Transform
+        //transorm is what called an affine transform
+        //affine transfrom is really simple it's just a blob a thing that represents a scale, a translation and a rotation . Just those 3 things.
+        // So you can take a UIView and rotate,scale it and translate it all you want with just this one little var "transform"
+        //ofcourse we are positioning things with the frame and stuff like that , but this is an additional way to control it's positioning,scaling and rotating.Now this is all going to be bitwise translation. So if you make it bigger , it look kind of jaggy,edged , pixellated .
+        //But we aint gonna make it bigger instead we gonna make it rotate it.
+        
+        //btw transform only has 3 methods rotate,translate and scale
+        //CGAffineTransform.identity gives a identity matrix and we rotate it by pi radians
+        lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
+
+        
+        
+        
         //offsetting first to get origin inside rounded corner then offsetting to get inside by size of frame of label
         lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
         
