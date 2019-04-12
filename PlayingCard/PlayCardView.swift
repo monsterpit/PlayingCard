@@ -49,6 +49,26 @@ class PlayCardView: UIView {
         return centeredAttributedString(rankString + "\n" + suit, fontSize: cornerFontSize)
     }
     
+    //Cannot use instance member 'createCornerLabel' within property initializer; property initializers run before 'self' is available
+    // Ofcourse we are initializing a variable over here "upperLeftCornerLabel " and calling a method on myself "createCornerLabel()"
+    // we know that until we are full initialized we cannot call mthods on ourself
+    // so we are going to use lazy (lazy makes it so these wont be initialized until they are asked for which will be after the thing is fully initialized)
+    private lazy var upperLeftCornerLabel  : UILabel   = createCornerLabel()
+    private lazy var lowerRightCornerLabel   = createCornerLabel()
+    
+    private func createCornerLabel() -> UILabel{
+        let label = UILabel()
+        
+        // byDefault label has 1 line ,
+        // by setting it to 0 it says use as many lines as you need
+        label.numberOfLines = 0
+        
+        //adding label as a subview on customView
+        addSubview(label)
+        return label
+    }
+    
+
     
     
     override func draw(_ rect: CGRect) {
