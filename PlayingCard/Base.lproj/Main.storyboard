@@ -29,7 +29,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="rank">
                                         <integer key="value" value="9"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="suit" value="X"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="suit" value="♣️"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>

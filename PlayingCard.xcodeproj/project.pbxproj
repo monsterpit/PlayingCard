@@ -14,6 +14,7 @@
 		2CD666D4225FAFFA00FA3911 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD666D2225FAFFA00FA3911 /* LaunchScreen.storyboard */; };
 		2CD666DC225FB03A00FA3911 /* PlayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD666DB225FB03A00FA3911 /* PlayCard.swift */; };
 		2CD666DE225FB93200FA3911 /* PlayingCardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD666DD225FB93200FA3911 /* PlayingCardDeck.swift */; };
+		2CFCA00622622A170049BBD1 /* Gestures.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2CFCA00522622A170049BBD1 /* Gestures.rtf */; };
 		9BE91269226069660091034A /* PlayCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE91268226069660091034A /* PlayCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		2CD666D5225FAFFA00FA3911 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CD666DB225FB03A00FA3911 /* PlayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayCard.swift; sourceTree = "<group>"; };
 		2CD666DD225FB93200FA3911 /* PlayingCardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardDeck.swift; sourceTree = "<group>"; };
+		2CFCA00522622A170049BBD1 /* Gestures.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Gestures.rtf; sourceTree = "<group>"; };
 		9BE91268226069660091034A /* PlayCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 				2CD666DB225FB03A00FA3911 /* PlayCard.swift */,
 				2CD666DD225FB93200FA3911 /* PlayingCardDeck.swift */,
 				9BE91268226069660091034A /* PlayCardView.swift */,
+				2CFCA00522622A170049BBD1 /* Gestures.rtf */,
 			);
 			path = PlayingCard;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CFCA00622622A170049BBD1 /* Gestures.rtf in Resources */,
 				2CD666D4225FAFFA00FA3911 /* LaunchScreen.storyboard in Resources */,
 				2CD666D1225FAFFA00FA3911 /* Assets.xcassets in Resources */,
 				2CD666CF225FAFF900FA3911 /* Main.storyboard in Resources */,
