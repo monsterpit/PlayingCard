@@ -23,7 +23,7 @@ class PlayCardView: UIView {
     //Our view has anaother little thing that needs to happen. We have subviews to draw our part of view, so we need to have those subviews laid out.
     //Now we are not using Auto Layout in our subviews we are putting them where they belong in the corners,but we still need to say "setNeedsLayout()"
     // So our subviews can get laid out.Now you don't have to say this if you dont have any subviews that needs laying out or that aren't affected by the rank changing.In our case it definitely change the rank. So we are going to do that for all public vars here because if public change any of these things it's going to change the way our card looks
-    var rank : Int = 11 {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var rank : Int = 3 {didSet{setNeedsDisplay(); setNeedsLayout()}}
     var suit : String = "♥️" {didSet{setNeedsDisplay(); setNeedsLayout()}}
     var isFaceUp : Bool = true {didSet{setNeedsDisplay(); setNeedsLayout()}}
     
@@ -144,6 +144,47 @@ class PlayCardView: UIView {
         setNeedsLayout()
     }
     
+    private func drawPips()
+    {
+        let pipsPerRowForRank = [[0], [1], [1,1], [1,1,1], [2,2], [2,1,2], [2,2,2], [2,1,2,2], [2,2,2,2], [2,2,1,2,2], [2,2,2,2,2]]
+        
+        func createPipString(thatFits pipRect: CGRect) -> NSAttributedString {
+            let maxVerticalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.count, $0)})
+            let maxHorizontalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.max() ?? 0, $0)})
+            let verticalPipRowSpacing = pipRect.size.height / maxVerticalPipCount
+            let attemptedPipString = centeredAttributedString(suit, fontSize: verticalPipRowSpacing)
+            let probablyOkayPipStringFontSize = verticalPipRowSpacing / (attemptedPipString.size().height / verticalPipRowSpacing)
+            let probablyOkayPipString = centeredAttributedString(suit, fontSize: probablyOkayPipStringFontSize)
+            if probablyOkayPipString.size().width > pipRect.size.width / maxHorizontalPipCount {
+                return centeredAttributedString(suit, fontSize: probablyOkayPipStringFontSize /
+                    (probablyOkayPipString.size().width / (pipRect.size.width / maxHorizontalPipCount)))
+            } else {
+                return probablyOkayPipString
+            }
+        }
+        
+        if pipsPerRowForRank.indices.contains(rank) {
+            let pipsPerRow = pipsPerRowForRank[rank]
+            var pipRect = bounds.insetBy(dx: cornerOffset, dy: cornerOffset).insetBy(dx: cornerString.size().width, dy: cornerString.size().height / 2)
+            let pipString = createPipString(thatFits: pipRect)
+            let pipRowSpacing = pipRect.size.height / CGFloat(pipsPerRow.count)
+            pipRect.size.height = pipString.size().height
+            pipRect.origin.y += (pipRowSpacing - pipRect.size.height) / 2
+            for pipCount in pipsPerRow {
+                switch pipCount {
+                case 1:
+                    pipString.draw(in: pipRect)
+                case 2:
+                    pipString.draw(in: pipRect.leftHalf)
+                    pipString.draw(in: pipRect.rightHalf)
+                default:
+                    break
+                }
+                pipRect.origin.y += pipRowSpacing
+            }
+        }
+    }
+    
     override func draw(_ rect: CGRect) {
         // bounds is bounds of custom View i.e. self i.e. PlayCardView
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
@@ -151,11 +192,13 @@ class PlayCardView: UIView {
         roundedRect.addClip()
         UIColor.white.setFill()
         roundedRect.fill()
-        print("holla \(rankString+suit)")
+        
         if let faceCardImage = UIImage.init(named: rankString+suit){
             //.zoom is our extension method
-            print("found")
             faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+        }
+        else{
+            drawPips()
         }
     }
     
