@@ -8,6 +8,9 @@
 
 import UIKit
 
+//For viewing make custom View visible  in Interface Builder(IB)
+//This compiles your view and put in your IB
+@IBDesignable
 class PlayCardView: UIView {
     
     
