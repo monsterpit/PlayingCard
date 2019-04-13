@@ -10,6 +10,11 @@ import UIKit
 
 //For viewing make custom View visible  in Interface Builder(IB)
 //This compiles your view and put in your IB
+//Custom View would appear blank because Images don't work with image name in Interface Builder
+//label are supported
+//well to support images in Interface Builder there exist another version of UIImage.init(named: "cardBack") which supports both on run and IB
+//UIImage.init(named: "cardBack",in : Bundle(for: self.classForCoder),compatibleWith : traitCollection)
+//support images for both IB and run
 @IBDesignable
 class PlayCardView: UIView {
     
@@ -26,9 +31,9 @@ class PlayCardView: UIView {
     //Our view has anaother little thing that needs to happen. We have subviews to draw our part of view, so we need to have those subviews laid out.
     //Now we are not using Auto Layout in our subviews we are putting them where they belong in the corners,but we still need to say "setNeedsLayout()"
     // So our subviews can get laid out.Now you don't have to say this if you dont have any subviews that needs laying out or that aren't affected by the rank changing.In our case it definitely change the rank. So we are going to do that for all public vars here because if public change any of these things it's going to change the way our card looks
-    var rank : Int = 3 {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var rank : Int = 12 {didSet{setNeedsDisplay(); setNeedsLayout()}}
     var suit : String = "♥️" {didSet{setNeedsDisplay(); setNeedsLayout()}}
-    var isFaceUp : Bool = false {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var isFaceUp : Bool = true {didSet{setNeedsDisplay(); setNeedsLayout()}}
     
     private func centeredAttributedString(_ string : String,fontSize : CGFloat ) -> NSAttributedString{
         
@@ -200,9 +205,9 @@ class PlayCardView: UIView {
         roundedRect.addClip()
         UIColor.white.setFill()
         roundedRect.fill()
-        
+
         if isFaceUp{
-            if let faceCardImage = UIImage.init(named: rankString+suit){
+            if let faceCardImage = UIImage.init(named: rankString+suit, in: Bundle(for: self.classForCoder), compatibleWith: traitCollection){
                 //.zoom is our extension method
                 faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
             }
@@ -211,7 +216,7 @@ class PlayCardView: UIView {
             }
         }
         else{
-            if let backgroundImage = UIImage.init(named: "cardBack"){
+            if let backgroundImage = UIImage.init(named: "cardBack",in : Bundle(for: self.classForCoder),compatibleWith : traitCollection){
                 
                 //drawing on whole bound as we dnt have any corner label
                 backgroundImage.draw(in: bounds)
