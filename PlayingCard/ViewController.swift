@@ -42,7 +42,22 @@ class ViewController: UIViewController {
             
         }
     }
- 
+    
+    //MARK:- Added from IB
+    
+    //can work with this only but not a proper way to do it
+    //    @IBAction func flipCard(_ sender: UITapGestureRecognizer) {
+    //        playingCardView.isFaceUp = !playingCardView.isFaceUp
+    //    }
+
+    @IBAction func flipCard(_ sender: UITapGestureRecognizer) {
+        switch sender.state{
+        case .ended:
+            playingCardView.isFaceUp = !playingCardView.isFaceUp
+        default: break
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
