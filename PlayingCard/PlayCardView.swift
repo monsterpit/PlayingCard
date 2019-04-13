@@ -25,7 +25,7 @@ class PlayCardView: UIView {
     // So our subviews can get laid out.Now you don't have to say this if you dont have any subviews that needs laying out or that aren't affected by the rank changing.In our case it definitely change the rank. So we are going to do that for all public vars here because if public change any of these things it's going to change the way our card looks
     var rank : Int = 3 {didSet{setNeedsDisplay(); setNeedsLayout()}}
     var suit : String = "♥️" {didSet{setNeedsDisplay(); setNeedsLayout()}}
-    var isFaceUp : Bool = true {didSet{setNeedsDisplay(); setNeedsLayout()}}
+    var isFaceUp : Bool = false {didSet{setNeedsDisplay(); setNeedsLayout()}}
     
     private func centeredAttributedString(_ string : String,fontSize : CGFloat ) -> NSAttributedString{
         
@@ -75,7 +75,7 @@ class PlayCardView: UIView {
         label.frame.size = CGSize.zero
         
         //MARK:- SizeToFit Important thing to Know
- //(****)       // it will size the label to fit its content by  label.sizeToFit()
+        //(****)       // it will size the label to fit its content by  label.sizeToFit()
         //the only tricky thing about this is though is it if that label already has some width and you say sizeToFit, it will make it taller and keep the width.
         // we dont want that , we wanted to do the whole thing
         // so we do label.frame.size = CGSize.zero which clear out it's size before we do sizeToFit()
@@ -118,7 +118,7 @@ class PlayCardView: UIView {
         
         //btw transform only has 3 methods rotate,translate and scale
         //CGAffineTransform.identity gives a identity matrix and we rotate it by pi radians
-     
+        
         //   lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
         //MARK:- 43.20 Multitouch https://www.youtube.com/watch?v=_ao1tlshRi0&list=PL3d_SFOiG7_8ofjyKzX6Nl1wZehbdiZC_&index=7
         //has this wont work as it will rotate around origin so we have to translate it
@@ -149,7 +149,9 @@ class PlayCardView: UIView {
         let pipsPerRowForRank = [[0], [1], [1,1], [1,1,1], [2,2], [2,1,2], [2,2,2], [2,1,2,2], [2,2,2,2], [2,2,1,2,2], [2,2,2,2,2]]
         
         func createPipString(thatFits pipRect: CGRect) -> NSAttributedString {
+            //getting max value of pipsPerRowForRank
             let maxVerticalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.count, $0)})
+            //getting max value of pipsPerRowForRank element
             let maxHorizontalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.max() ?? 0, $0)})
             let verticalPipRowSpacing = pipRect.size.height / maxVerticalPipCount
             let attemptedPipString = centeredAttributedString(suit, fontSize: verticalPipRowSpacing)
@@ -165,9 +167,11 @@ class PlayCardView: UIView {
         
         if pipsPerRowForRank.indices.contains(rank) {
             let pipsPerRow = pipsPerRowForRank[rank]
+            //cornerString size of cornerstring nsattribute String
             var pipRect = bounds.insetBy(dx: cornerOffset, dy: cornerOffset).insetBy(dx: cornerString.size().width, dy: cornerString.size().height / 2)
             let pipString = createPipString(thatFits: pipRect)
             let pipRowSpacing = pipRect.size.height / CGFloat(pipsPerRow.count)
+            
             pipRect.size.height = pipString.size().height
             pipRect.origin.y += (pipRowSpacing - pipRect.size.height) / 2
             for pipCount in pipsPerRow {
@@ -180,6 +184,7 @@ class PlayCardView: UIView {
                 default:
                     break
                 }
+                //adding height space for next drawing
                 pipRect.origin.y += pipRowSpacing
             }
         }
@@ -193,18 +198,28 @@ class PlayCardView: UIView {
         UIColor.white.setFill()
         roundedRect.fill()
         
-        if let faceCardImage = UIImage.init(named: rankString+suit){
-            //.zoom is our extension method
-            faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+        if isFaceUp{
+            if let faceCardImage = UIImage.init(named: rankString+suit){
+                //.zoom is our extension method
+                faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+            }
+            else{
+                drawPips()
+            }
         }
         else{
-            drawPips()
+            if let backgroundImage = UIImage.init(named: "cardBack"){
+                
+                //drawing on whole bound as we dnt have any corner label
+                backgroundImage.draw(in: bounds)
+            }
+            
         }
     }
     
     
     
-
+    
     
     
     
