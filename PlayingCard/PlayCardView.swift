@@ -18,6 +18,28 @@ class PlayCardView: UIView {
      @IBInspectable
     var isFaceUp : Bool = true {didSet{setNeedsDisplay(); setNeedsLayout()}}
     
+    // we dont need setNeedsLayout() has changing the card Size does not affect the corners
+    var faceCardScale : CGFloat = SizeRatio.faceCardImageSizeToBoundsSize { didSet {setNeedsDisplay()}}
+    
+    @objc func adjustFaceCardScale(byHandlingGestureRecognizedBy recognizer : UIPinchGestureRecognizer){
+        switch recognizer.state {
+        case .changed,.ended:
+            faceCardScale *= recognizer.scale
+            // we only want incremental changes because we are changing the scale each time
+            // So otherwise the scale would be just expotential.
+            //Incremental deliver immediate and steady results while exponential results accelerate over time
+            //So we are going to reset the recognizer scale to 1.0 each time  that happens
+            print(recognizer.scale)
+            
+            //MARK:- To prevent expotential growth and incremental growth
+            recognizer.scale = 1.0
+        //ingorinng all other states
+        default:
+            break
+        }
+    }
+    // So gonna have adjustFaceCardScale gesture recognizer be added back to controller as a pinch gesture
+    
     private func centeredAttributedString(_ string : String,fontSize : CGFloat ) -> NSAttributedString{
         
         var font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
@@ -134,8 +156,9 @@ class PlayCardView: UIView {
 
         if isFaceUp{
             if let faceCardImage = UIImage.init(named: rankString+suit, in: Bundle(for: self.classForCoder), compatibleWith: traitCollection){
-
-                faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+                // changing has SizeRatio.faceCardImageSizeToBoundsSize is a constant
+               // faceCardImage.draw(in: bounds.zoom(by: SizeRatio.faceCardImageSizeToBoundsSize))
+                faceCardImage.draw(in: bounds.zoom(by: faceCardScale))
             }
             else{
                 drawPips()

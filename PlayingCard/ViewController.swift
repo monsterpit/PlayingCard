@@ -30,6 +30,13 @@ class ViewController: UIViewController {
             //saying playingCardView please start recognizing me
             playingCardView.addGestureRecognizer(swipe)
             // and now it will start recognizing
+            
+            //target is going to be playingCardView because it's gonna handle it directly.It's gonna handle directly.
+            //It's not gonna go to the controller
+            // and the selector is method in playingCardView
+            let pinch = UIPinchGestureRecognizer(target: playingCardView, action: #selector(playingCardView.adjustFaceCardScale(byHandlingGestureRecognizedBy:)))
+            //adding gesture to view
+            playingCardView.addGestureRecognizer(pinch)
         }
     }
     
